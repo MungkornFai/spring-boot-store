@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: store
+  datasource:
+    url: jdbc:mysql://localhost:3306/store_api?createDatabaseIfNotExist=true
+    username: root
+    password: mysql0000ffFF
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
