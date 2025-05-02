@@ -1,12 +1,9 @@
 package com.mungkorn.springbootecommerceapi.entities;
 
-import com.mungkorn.springbootecommerceapi.entities.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Builder
 @AllArgsConstructor

@@ -3,8 +3,6 @@ package com.mungkorn.springbootecommerceapi.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.math.BigDecimal;
 

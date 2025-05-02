@@ -2,8 +2,8 @@ package com.mungkorn.springbootecommerceapi.controllers;
 
 
 import com.mungkorn.springbootecommerceapi.dtos.RegisterUserRequest;
+import com.mungkorn.springbootecommerceapi.dtos.UpdateUserRequest;
 import com.mungkorn.springbootecommerceapi.dtos.UserDto;
-import com.mungkorn.springbootecommerceapi.entities.User;
 import com.mungkorn.springbootecommerceapi.mappers.UserMapper;
 import com.mungkorn.springbootecommerceapi.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -56,5 +56,19 @@ public class UserController {
         var userDto = userMapper.toDto(user);
         var uri = uriBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
         return ResponseEntity.created(uri).body(userDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(
+            @PathVariable(name = "id") Long id,
+            @RequestBody UpdateUserRequest request
+            ){
+        var user = userRepository.findById(id).orElse(null);
+        if(user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        userMapper.updateUser(request, user);
+        userRepository.save(user);
+        return ResponseEntity.ok(userMapper.toDto(user));
     }
 }
