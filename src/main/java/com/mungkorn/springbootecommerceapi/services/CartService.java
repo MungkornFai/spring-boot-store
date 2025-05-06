@@ -8,16 +8,14 @@ import com.mungkorn.springbootecommerceapi.exceptions.ProductNotFoundException;
 import com.mungkorn.springbootecommerceapi.mappers.CartMapper;
 import com.mungkorn.springbootecommerceapi.repositories.CartRepository;
 import com.mungkorn.springbootecommerceapi.repositories.ProductRepository;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.UUID;
 
 
 @Service
+@AllArgsConstructor
 public class CartService {
     private  CartRepository cartRepository;
     private CartMapper cartMapper;
@@ -25,7 +23,9 @@ public class CartService {
 
     public CartDto createCart() {
         var cart = new Cart();
+        System.out.println("cart created");
         cartRepository.save(cart);
+
         return cartMapper.toDto(cart);
     }
 
