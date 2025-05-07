@@ -60,6 +60,7 @@ public class UserController {
                     Map.of("email", "Email is already exist")
             );
         }
+        
         var user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);

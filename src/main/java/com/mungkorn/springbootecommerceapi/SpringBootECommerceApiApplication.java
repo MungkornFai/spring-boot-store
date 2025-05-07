@@ -1,6 +1,5 @@
 package com.mungkorn.springbootecommerceapi;
 
-import com.mungkorn.springbootecommerceapi.entities.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
