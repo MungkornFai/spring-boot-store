@@ -5,9 +5,7 @@ import com.mungkorn.springbootecommerceapi.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -20,36 +18,35 @@ public class JwtService {
     private final JwtConfig jwtConfig;
 
 
-    public String generateAccessToken(User user) {
-
+    public Jwt generateAccessToken(User user) {
         return generateToken(user, jwtConfig.getAccessTokenExpiration());
     }
 
-    public String generaRefreshToken(User user) {
-
+    public Jwt generaRefreshToken(User user) {
         return generateToken(user, jwtConfig.getRefreshTokenExpiration());
     }
 
-    private String generateToken(User user, long tokenExpiration) {
-        return Jwts.builder()
+    private Jwt generateToken(User user, long tokenExpiration) {
+        var claims = Jwts.claims()
                 .subject(user.getId().toString())
-                .claim("email", user.getEmail())
-                .claim("name", user.getName())
+                .add("email", user.getEmail())
+                .add("name", user.getName())
+                .add("role", user.getRole())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration))
-                .signWith(jwtConfig.getSecretKey())
-                .compact();
+                .build();
+        return new Jwt(claims, jwtConfig.getSecretKey());
     }
 
-    public boolean validateToken(String token) {
-        try {
+    public Jwt parseToken(String token) {
+        try{
             var claims = getClaims(token);
-            return claims.getExpiration().after(new Date());
-        }
-        catch (JwtException ex) {
-            return false;
+            return new Jwt(claims, jwtConfig.getSecretKey());
+        } catch (JwtException e) {
+            return null;
         }
     }
+
 
     private Claims getClaims(String token) {
         return Jwts.parser()
@@ -59,7 +56,5 @@ public class JwtService {
                 .getPayload();
     }
 
-    public Long getUserIdFromToken(String token) {
-        return Long.valueOf(getClaims(token).getSubject());
-    }
+
 }

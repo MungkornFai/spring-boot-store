@@ -2,6 +2,7 @@ package com.mungkorn.springbootecommerceapi.controllers;
 
 
 import com.mungkorn.springbootecommerceapi.dtos.*;
+import com.mungkorn.springbootecommerceapi.entities.Role;
 import com.mungkorn.springbootecommerceapi.mappers.UserMapper;
 import com.mungkorn.springbootecommerceapi.repositories.UserRepository;
 import jakarta.validation.Valid;
@@ -63,6 +64,7 @@ public class UserController {
         
         var user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.USER);
         userRepository.save(user);
 
         var userDto = userMapper.toDto(user);
