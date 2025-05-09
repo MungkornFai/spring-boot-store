@@ -7,6 +7,7 @@ import com.mungkorn.springbootecommerceapi.dtos.LoginRequestDto;
 import com.mungkorn.springbootecommerceapi.dtos.UserDto;
 import com.mungkorn.springbootecommerceapi.mappers.UserMapper;
 import com.mungkorn.springbootecommerceapi.repositories.UserRepository;
+import com.mungkorn.springbootecommerceapi.services.AuthService;
 import com.mungkorn.springbootecommerceapi.services.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,18 +18,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
 public class AuthController {
+
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final JwtConfig jwtConfig;
+    private final AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(
@@ -76,11 +78,7 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<UserDto> getUser(){
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userId = (Long) authentication.getPrincipal();
-
-        var user = userRepository.findById(userId).orElseThrow();
-
+        var user = authService.getCurrectUser();
         var userDto = userMapper.toDto(user);
         return ResponseEntity.ok(userDto);
     }
