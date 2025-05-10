@@ -33,11 +33,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(
-            @Valid @RequestBody LoginRequestDto request,
-            HttpServletResponse response
-
-    ) {
+    public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginRequestDto request, HttpServletResponse response) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
