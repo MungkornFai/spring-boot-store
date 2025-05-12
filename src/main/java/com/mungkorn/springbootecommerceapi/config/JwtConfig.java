@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.SecretKey;
-
+// this class it for getting environment from pom file
 @Configuration
 @ConfigurationProperties(prefix = "spring.jwt")
 @Data

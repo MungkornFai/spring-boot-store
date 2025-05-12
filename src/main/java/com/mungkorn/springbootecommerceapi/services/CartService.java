@@ -23,7 +23,6 @@ public class CartService {
 
     public CartDto createCart() {
         var cart = new Cart();
-        System.out.println("cart created");
         cartRepository.save(cart);
 
         return cartMapper.toDto(cart);

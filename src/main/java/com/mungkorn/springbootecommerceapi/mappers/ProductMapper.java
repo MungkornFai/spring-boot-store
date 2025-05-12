@@ -11,7 +11,9 @@ import org.mapstruct.MappingTarget;
 public interface ProductMapper {
     @Mapping(source = "category.id", target = "categoryId")
     ProductDto toDto(Product product);
+
     Product toEntity(ProductDto productDto);
+
     @Mapping(target = "id", ignore = true)
     void updateProduct(ProductDto productDto,@MappingTarget Product product);
 }

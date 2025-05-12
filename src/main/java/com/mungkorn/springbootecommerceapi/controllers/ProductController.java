@@ -54,7 +54,9 @@ public class ProductController {
         var product = productMapper.toEntity(productDto);
           product.setCategory(category);
         productRepository.save(product);
+
          productDto.setId(product.getId());
+
          var ui = uriBuilder.path("/products/{id}").buildAndExpand(productDto.getId()).toUri();
         return ResponseEntity.created(ui).body(productDto);
     }
