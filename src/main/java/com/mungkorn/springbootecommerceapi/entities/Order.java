@@ -27,7 +27,7 @@ public class Order {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private PaymentStatus status;
 
     // tell hibernate to let database take of this field
     @Column(name = "created_at", insertable = false, updatable = false)
@@ -45,7 +45,7 @@ public class Order {
         var order = new Order();
         order.setCustomer(customer);
         order.setTotalPrice(cart.getTotalPrice());
-        order.setStatus(OrderStatus.PENDING);
+        order.setStatus(PaymentStatus.PENDING);
 
         // loop item in the cart and get item
         cart.getItems().forEach(item -> {

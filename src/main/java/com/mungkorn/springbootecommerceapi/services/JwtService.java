@@ -48,6 +48,7 @@ public class JwtService {
     }
 
 
+    // helper method
     private Claims getClaims(String token) {
         return Jwts.parser()
                 .verifyWith(jwtConfig.getSecretKey())
